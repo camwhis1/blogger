@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var debug = require('debug')('app');
 
-const todoRouter = require('./routes/todoRoutes');
+const todoRouter = require('./routes/index');
 
 var app = express();
 
@@ -27,14 +27,8 @@ app.use('/css', express.static(__dirname + '/public/stylesheets'));
 app.use('/webfonts', express.static(__dirname + '/public/fonts/webfonts/')); 
 
 app.get('/', todoRouter);
-app.post('/task/complete/:id', todoRouter);
-app.get('/task/edit/:id', todoRouter);
-app.post('/task/edit/:id', todoRouter);
-app.get('/task/delete/:id', todoRouter);
-app.post('/task/delete/:id', todoRouter);
-app.get('/task/complete/:id', todoRouter);
-app.get('/task/add/', todoRouter);
-app.post('/task/add/', todoRouter);
+app.get('/blogAdd', todoRouter);
+app.get('/blogList', todoRouter);
 
 // catch favicon requests and respond
 app.use('/favicon.ico', (req, res) => res.status(204));
