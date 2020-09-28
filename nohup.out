@@ -812,3 +812,51 @@ GET /js/bootstrap.min.js 304 - - 2.495 ms
 GET /css/fontawesome-all.css 304 - - 3.768 ms
 GET /js/jquery.min.js 304 - - 2.968 ms
 GET / 200 931 - 1.058 ms
+internal/modules/cjs/loader.js:969
+  throw err;
+  ^
+
+Error: Cannot find module './routes/index'
+Require stack:
+- /home/bitnami/blog1/blogger/app.js
+- /home/bitnami/blog1/blogger/bin/www
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:966:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:842:27)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+    at require (internal/modules/cjs/helpers.js:72:18)
+    at Object.<anonymous> (/home/bitnami/blog1/blogger/app.js:8:20)
+    at Module._compile (internal/modules/cjs/loader.js:1138:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/bitnami/blog1/blogger/app.js',
+    '/home/bitnami/blog1/blogger/bin/www'
+  ]
+}
+internal/modules/cjs/loader.js:969
+  throw err;
+  ^
+
+Error: Cannot find module './routes/index'
+Require stack:
+- /home/bitnami/blog1/blogger/app.js
+- /home/bitnami/blog1/blogger/bin/www
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:966:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:842:27)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+    at require (internal/modules/cjs/helpers.js:72:18)
+    at Object.<anonymous> (/home/bitnami/blog1/blogger/app.js:8:20)
+    at Module._compile (internal/modules/cjs/loader.js:1138:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/bitnami/blog1/blogger/app.js',
+    '/home/bitnami/blog1/blogger/bin/www'
+  ]
+}

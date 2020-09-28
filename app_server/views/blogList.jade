@@ -1,0 +1,31 @@
+html
+  head
+    title Blog List
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    link(rel='stylesheet' href='/css/bootstrap.min.css')
+    link(rel='stylesheet' href='/css/fontawesome-all.css')
+  body
+    .container
+      nav.navbar.fixed-top.navbar-expand-sm.navbar-dark.bg-primary
+        a.navbar-brand(href='/') My Blog
+        #navbarNavAltMarkup.collapse.navbar-collapse
+          .navbar-nav
+            a.nav-item.nav-link.active(href='/blogList') List Blogs
+            a.nav-item.nav-link.active(href='/blogAdd') Add Blog
+      p
+      each blogs in blog
+       .col-xs-12.list-group-item
+        h4
+         p
+          h4= blogs.blogTitle
+         p
+          h4= blogs.blogEntry
+         p
+          h4= blogs.blogDate
+            a.btn.btn-default.pull-right(href='/blogList/blogEdit') Edit
+            a.btn.btn-default.pull-right(href='/blogList/blogDelete') Delete
+        p
+          // card
+          // container
+          script(src='/js/jquery.min.js')
+          script(src='/js/bootstrap.min.js')

@@ -4,14 +4,15 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var debug = require('debug')('app');
+require('./app_server/models/db');
 
-const todoRouter = require('./routes/index');
+const todoRouter = require('./app_server/routes/index');
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'app_server', 'views'));
+app.set('view engine', 'jade');
 
 app.use(morgan('tiny'));
 app.use(express.json());
@@ -29,6 +30,8 @@ app.use('/webfonts', express.static(__dirname + '/public/fonts/webfonts/'));
 app.get('/', todoRouter);
 app.get('/blogAdd', todoRouter);
 app.get('/blogList', todoRouter);
+app.get('/blogList/blogEdit', todoRouter)
+app.get('/blogList/blogDelete', todoRouter)
 
 // catch favicon requests and respond
 app.use('/favicon.ico', (req, res) => res.status(204));
