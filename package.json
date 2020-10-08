@@ -1,9 +1,13 @@
 {
-  "name": "todo",
+  "name": "Loc8r",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "DEBUG=app:* nodemon ./bin/www"
+  },
+  "engines":{
+	  "node": "v12.18.1",
+	  "npm": "6.14.5"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
