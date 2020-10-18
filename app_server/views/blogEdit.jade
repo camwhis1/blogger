@@ -13,9 +13,14 @@ html
             a.nav-item.nav-link.active(href='/blogList') List Blogs
             a.nav-item.nav-link.active(href='/blogAdd') Add Blog
       p
-      h4 Edit Blog
-      p
-        i Blog Edit feature is under construction.
+        .card.border-primary(style='width: 50%')
+          form(name='userForm' ng-submit='vm.submit()' ng-controller='EditController' style='padding: 20px')
+          .form-group
+            label.text-primary(for='summary') Blog Title
+            input#blogTitle.form-control(name='blogTitle' value='{{vm.blog.blogTitle}}')
+            label.text-primary(for='detail') Blog Text
+            textarea#blogText.form-control(name='blogText' rows='3') {{vm.blog.blogText}}
+            input.btn.btn-primary(type='submit' value='Save Blog')
     // container
     script(src='/js/jquery.min.js')
     script(src='/js/bootstrap.min.js')

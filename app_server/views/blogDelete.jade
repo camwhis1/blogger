@@ -12,10 +12,17 @@ html
           .navbar-nav
             a.nav-item.nav-link.active(href='/blogList') List Blogs
             a.nav-item.nav-link.active(href='/blogAdd') Add Blog
-      p
-      h4 Delete Blog
-      p
-        i Blog Delete feature is under construction.
+    p
+.card.border-primary(style='width: 50%')
+  form(name='userForm' ng-submit='vm.submit()' ng-controller='DeleteController' style='padding: 20px')
+    .form-group
+      label.text-primary(for='summary') Blog Title
+      input#blogTitle.form-control(readonly='' name='blogTitle' value='{{vm.blog.blogTitle}}')
+      label.text-primary(for='detail') Blog Text
+      textarea#blogText.form-control(readonly='' name='blogText' rows='3') {{vm.blog.blogText}}
+    input.btn.btn-danger.float-right(type='submit' value='Delete Blog')
+    button.btn.btn-primary.float-right(ng-click='vm.cancel()' ng-controller='DeleteController' style='margin-right: 25px') Cancel
+
     // container
     script(src='/js/jquery.min.js')
     script(src='/js/bootstrap.min.js')

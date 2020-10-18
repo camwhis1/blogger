@@ -1,6 +1,5 @@
 html
   head
-    title Cameron Whislers Blog
     link(rel='stylesheet' href='/stylesheets/style.css')
     link(rel='stylesheet' href='/css/bootstrap.min.css')
     link(rel='stylesheet' href='/css/fontawesome-all.css')
@@ -12,10 +11,12 @@ html
           .navbar-nav
             a.nav-item.nav-link.active(href='/blogList') List Blogs
             a.nav-item.nav-link.active(href='/blogAdd') Add Blog
-      p
-      h4 Cameron Whislers Blog Site
-      p Welcome to my blog site.
+  .row
+    .col-lg-6
+      h1 Cameron Whislers Blog
+  .row
+    .col-xs-12.col-sm-8
+      .error= message
     // container
     script(src='/js/jquery.min.js')
     script(src='/js/bootstrap.min.js')
-

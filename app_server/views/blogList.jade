@@ -13,17 +13,13 @@ html
             a.nav-item.nav-link.active(href='/blogList') List Blogs
             a.nav-item.nav-link.active(href='/blogAdd') Add Blog
       p
-      each blogs in blog
-       .col-xs-12.list-group-item
-        h4
-         p
-          h4= blogs.blogTitle
-         p
-          h4= blogs.blogEntry
-         p
-          h4= blogs.blogDate
-            a.btn.btn-default.pull-right(href='/blogList/blogEdit') Edit
-            a.btn.btn-default.pull-right(href='/blogList/blogDelete') Delete
+      each blog in blogs
+        .col-xs-12.list-group-item
+           p
+             (href="/blogList/#{blog._id}") #{blog.content}
+           p
+             a.btn.btn-default.pull-right(href="/blogEdit/#{blog._id}") Edit
+             a.btn.btn-default.pull-right(href="/blogDelete/#{blog._id}") Delete 
         p
           // card
           // container

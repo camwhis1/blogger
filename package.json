@@ -1,29 +1,30 @@
 {
-  "name": "Loc8r",
-  "version": "0.0.0",
+  "name": "blogs",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "DEBUG=app:* nodemon ./bin/www"
+    "start": "sudo node ./bin/www"
   },
-  "engines":{
-	  "node": "v12.18.1",
-	  "npm": "6.14.5"
+  "engines": {
+    "node": "v12.18.1",
+    "npm": "6.14.5"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.1",
     "debug": "^2.6.9",
     "dotenv": "^5.0.1",
-    "ejs": "~2.5.7",
+    "ejs": "^2.5.9",
     "express": "~4.16.0",
     "heroku": "^7.45.0",
     "http-errors": "~1.6.2",
     "jade": "^1.11.0",
     "jquery": "^3.3.1",
     "mongodb": "^3.1.0-beta4",
-    "mongoose": "^5.10.8",
+    "mongoose": "^5.10.9",
     "morgan": "^1.9.0",
-    "popper.js": "^1.14.3"
+    "popper.js": "^1.14.3",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "eslint-config-airbnb-base": "^12.1.0",
