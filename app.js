@@ -6,14 +6,9 @@ var morgan = require('morgan');
 var debug = require('debug')('app');
 require('./app_api/models/db');
 
-var regRouter = require('./app_server/routes/index');
 var apiRouter = require('./app_api/routes/index');
 
 var app = express();
-
- //view engine setup
- app.set('views', path.join(__dirname, 'app_server', 'views'));
- app.set('view engine', 'ejs');
 
  app.use(morgan('tiny'));
  app.use(express.json());
@@ -22,14 +17,24 @@ var app = express();
  app.use(bodyParser.urlencoded({ extended: true }));
 
  app.use(express.static(path.join(__dirname, 'public')));
+ app.use(express.static(path.join(__dirname, 'app_client')));
+
  app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
  app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
  app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
  app.use('/css', express.static(__dirname + '/public/stylesheets'));
  app.use('/webfonts', express.static(__dirname + '/public/fonts/webfonts/'));
 
- app.use('/', regRouter);
+ app.use('/js', express.static(__dirname + '/node_modules/angular'));
+ app.use('/js', express.static(__dirname + '/node_modules/angular-route'));
+ app.use('/js', express.static(__dirname + '/node_modules/angular-ui-router/release'));
+ app.use('/js', express.static(__dirname + '/app_client'));
+
  app.use('/api', apiRouter);
+
+app.use(function(req, res) {
+	res.sendFile(path.join(__dirname, 'app_client', 'index.html'));
+}); 
  
 // catch favicon requests and respond
  app.use('/favicon.ico', (req, res) => res.status(204));

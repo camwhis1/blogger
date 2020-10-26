@@ -1,9 +1,21 @@
-var mongoose = require('mongoose');
+var mongoose = require( 'mongoose' );
 
-var blogSchema = new mongoose.Schema ({
-	        blogTitle: {type: String, required: true},
-	        blogEntry: {type: String, required: true},
-	        blogDate: {type: String, "default": new Date().toLocaleString("en-US", {timeZone: "America/New_York"})}
+var getNewDate = function() { return new Date(); };
+
+var blogSchema = new mongoose.Schema({
+	title: {
+		type: String,
+		required: true
+	},
+	text: {
+		type: String,
+		required: true
+	},
+	createdOn: {
+		type: String,
+		"default": getNewDate().toLocaleString("en-US", {timeZone: "America/New_York"})
+	}
 });
 
 mongoose.model('Blog', blogSchema);
+
