@@ -1,7 +1,7 @@
 var app = angular.module('bloggerApp', ['ngRoute', 'ui.router']);
 
 //*** routerProvider ***
-app.config(function($routeProvider) {
+app.config(function($routeProvider, $locationProvider) {
 	$routeProvider
 		.when('/', {
 			templateUrl: 'pages/home.html',
@@ -34,18 +34,20 @@ app.config(function($routeProvider) {
 		})
 
 		.when('/register', {
-			templateUrl: 'pages/register.html',
-			controller: 'RegisterController',
+			templateUrl: 'common/auth/register.html',
+			controller: 'RegisterController'
 			controllerAs: 'vm'
 		})
 
 		.when('/login', {
-			templateUrl: 'pages/login.html',
+			templateUrl: 'common/auth/login.html',
 			controller: 'LoginController',
 			controllerAs: 'vm'
 		})
 
 		.otherwise({redirectTo: '/'});
+
+	$locationProvider.html5Mode(true);
 });
 
 //*** State Provider ***//
@@ -92,7 +94,7 @@ app.controller('HomeController', function HomeController() {
 });
 
 //blog add controller
-app.controller("AddController", [ '$http', '$routeParams', '$state', 'authentication', function AddController($http, $routeParams, $state, authentication) {
+app.controller("AddController", [ '$http', '$routeParams', '$state', function AddController($http, $routeParams, $state) {
 	var vm = this;
 	vm.blog = {};
 	vm.title = "Add Blog";
@@ -102,7 +104,7 @@ app.controller("AddController", [ '$http', '$routeParams', '$state', 'authentica
 		data.title = addForm.title.value;
 		data.text = addForm.text.value;
 
-		addBlog($http, authentication, data)
+		addBlog($http, data)
 			.success(function(data) {
 				vm.message = "Blog data added!";
 				$state.go('blogList');
@@ -114,18 +116,10 @@ app.controller("AddController", [ '$http', '$routeParams', '$state', 'authentica
 }]);
 
 //blog list controller
-app.controller('ListController', [ '$http', 'authentication', function ListController($http, authentication) {
+app.controller('ListController', function ListController($http) {
 	var vm = this;
 	vm.pageHeader = {
 		title: 'Blog List'
-	};
-
-	vm.isLoggedIn = function() {
-		return authentication.isLoggedIn();
-	}
-	vm.logout = function() {
-		authentication.logout();
-		$location.path('/');
 	};
 
 	getBlogs($http).success(function(data) {
@@ -135,10 +129,10 @@ app.controller('ListController', [ '$http', 'authentication', function ListContr
 	.error(function (e) {
 		vm.message = "Could not get list of blogs";
 	});
-}]);
+});
 
 //edit blog controller
-app.controller('EditController', [ '$http', '$routeParams', '$state', 'authentication', function EditController($http, $routeParams, $state, authentication) {
+app.controller('EditController', [ '$http', '$routeParams', '$state', function EditController($http, $routeParams, $state) {
 	var vm = this;
 	vm.blog = {}; //start with empty blog
 	vm.id = $routeParams.id; 
@@ -161,7 +155,7 @@ app.controller('EditController', [ '$http', '$routeParams', '$state', 'authentic
 		data.title = userForm.title.value;
 		data.text = userForm.text.value;
 
-		updateBlog($http, authentication, vm.id, data).success(function(data) {
+		updateBlog($http, vm.id, data).success(function(data) {
 			vm.message = "Blog data updated!";
 			$state.go('blogList'); //refer to book for info on StateProvider
 		})
@@ -172,7 +166,7 @@ app.controller('EditController', [ '$http', '$routeParams', '$state', 'authentic
 }]);
 
 //delete blog controller
-app.controller("DeleteController", [ '$http', '$routeParams', '$state', 'authentication', function DeleteController($http, $routeParams, $state, authentication) {
+app.controller("DeleteController", [ '$http', '$routeParams', '$state', function DeleteController($http, $routeParams, $state) {
 	var vm = this;
 	vm.blog = {};
 	vm.id = $routeParams.id;
@@ -189,7 +183,7 @@ app.controller("DeleteController", [ '$http', '$routeParams', '$state', 'authent
 
 	vm.submit = function() {
 		var data = {};
-		deleteBlog($http, authentication, vm.id)
+		deleteBlog($http, vm.id)
 			.success(function(data) {
 				vm.message = "Blog data deleted!";
 				//go back to blogList

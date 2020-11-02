@@ -32,3 +32,4 @@ process.on('SIGINT', function() {
 
 //get schemas
 require('./blogs');
+require('./users');

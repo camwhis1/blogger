@@ -11,7 +11,7 @@
 	<body>
 
 		<!-- Navigation Directive -->
-		<div ng-controller='NavigationController'>
+		<div ng-controller="NavigationController">
 			<navigation></navigation>
 		</div>
 
@@ -39,10 +39,10 @@
 			    <div class="col-sm">
 			       <ul class="nav justify-content-end nav-pills card-header-pills">
 			         <li class="nav-item">
-				     <a ng-show="vm.isLoggedIn()" class="nav-link" href="#/blogEdit/{{blog._id}}"> <i class="fas fa-edit"></i></a>
+				     <a class="nav-link" href="#/blogEdit/{{blog._id}}"> <i class="fas fa-edit"></i></a>
 				 </li>
 				 <li class="nav-item">
-				     <a ng-show="vm.isLoggedIn()" class="nav-link" href="#/blogDelete/{{blog._id}}"> <i class="fas fa-trash-alt"></i></a>
+				     <a class="nav-link" href="#/blogDelete/{{blog._id}}"> <i class="fas fa-trash-alt"></i></a>
 				 </li>
 			       </ul>
 			</div>
@@ -103,68 +103,12 @@
 			</div>
 		</script>
 
-		<script type="text/ng-template" id="pages/login.html">					<div class="container">
-  			 	<page-header content="vm.title"></page-header>
-
-  				<div class="row">
-    					<div class="col-md-6 col-sm-8">
-	    					<p class="lead">Not a member? Please <a href="/#register">register</a> first.</p>
-      						<form ng-submit="vm.onSubmit()">
-        					<div role="alert" ng-show="vm.formError" class="alert alert-danger">{{ vm.formError }}</div>
-        					<div class="form-group">
-          						<label for="email">Email address</label>
-          						<input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="vm.credentials.email">
-        					</div>
-        					<div class="form-group">
-          						<label for="password">Password</label>
-          						<input type="password" class="form-control" id="password" placeholder="Password" ng-model="vm.credentials.password">
-        					</div>
-        					<button type="submit" class="btn btn-primary">Sign in!</button>
-      						</form>
-    					</div>
-  			</div>
-
-  			<footer-generic></footer-generic>
-			</div>
-		</script>
-
-		<!-- register page -->
-		<script type="text/ng-template" id="pages/register.html">
-			<div class="container">
-  				<page-header content="vm.title"></page-header>
-
-  				<div class="row">
-    					<div class="col-md-6 col-sm-12">
-      						<p class="lead">Already a member? Please <a href="/#login">log in</a> instead.</p>
-      						<form ng-submit="vm.onSubmit()">
-        					<div role="alert" ng-show="vm.formError" class="alert alert-danger">{{ vm.formError }}</div>
-        					<div class="form-group">
-          						<label for="name">Full name</label>
-          						<input type="text" class="form-control" id="name" placeholder="Enter your name" ng-model="vm.credentials.name">
-        </div>
-        					<div class="form-group">
-          						<label for="email">Email address</label>
-          						<input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="vm.credentials.email">
-        					</div>
-        					<div class="form-group">
-          						<label for="password">Password</label>
-          						<input type="password" class="form-control" id="password" placeholder="Password" ng-model="vm.credentials.password">
-        					</div>
-        					<button type="submit" class="btn btn-primary">Register!</button>
-      						</form>
-    					</div>
-  				</div>
-
-  				<footer-generic></footer-generic>
-			</div>
-		</script>
-
 		<!-- Angular View (dynamic content goes here) -->
 		<div ng-view></div>
 
 	<script src="/js/bloggerApp.js"></script>
-	<script src="/nav/navigation.js"></script>
-	<script src="/auth/authentication.js"></script>
+	<!-- <script src="/js/common/auth/authentication.js"></script> -->
+	<script src="/js/common/nav/navigation.js"></script>
 	</body>
 </html>
 

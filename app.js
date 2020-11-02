@@ -1,10 +1,13 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var debug = require('debug')('app');
+var passport = require('passport');
+
 require('./app_api/models/db');
+require('./app_api/config/passport');
 
 var apiRouter = require('./app_api/routes/index');
 
@@ -29,6 +32,10 @@ var app = express();
  app.use('/js', express.static(__dirname + '/node_modules/angular-route'));
  app.use('/js', express.static(__dirname + '/node_modules/angular-ui-router/release'));
  app.use('/js', express.static(__dirname + '/app_client'));
+ app.use('/nav', express.static(__dirname + '/app_client/common/nav')); 
+ app.use('/auth', express.static(__dirname + '/app_client/common/auth'));
+
+app.use(passport.initialize());
 
  app.use('/api', apiRouter);
 
