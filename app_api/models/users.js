@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-//Next 3 lines included to avoid warnings
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
@@ -7,7 +6,6 @@ mongoose.set('useCreateIndex', true);
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 
-//Users Schema
 var userSchema = new mongoose.Schema({
 	email: {
 		type: String,
@@ -21,8 +19,6 @@ var userSchema = new mongoose.Schema({
 	hash: String,
 	salt: String
 });
-
-//*** Methods for Users Schema ***//
 
 userSchema.methods.setPassword = function(password){
 	this.salt = crypto.randomBytes(16).toString('hex');
@@ -43,7 +39,7 @@ userSchema.methods.generateJwt = function() {
 		email: this.email,
 		name: this.name,
 		exp: parseInt(expiry.getTime() / 1000),
-	}, process.env.JWT_SECRET); //Do not keep secret in code
+	}, process.env.JWT_SECRET);
 };
 
 mongoose.model('User', userSchema);

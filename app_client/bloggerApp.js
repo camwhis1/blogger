@@ -1,6 +1,5 @@
 var app = angular.module('bloggerApp', ['ngRoute', 'ui.router']);
 
-//*** routerProvider ***
 app.config(function($routeProvider) {
 	$routeProvider
 		.when('/', {
@@ -48,7 +47,6 @@ app.config(function($routeProvider) {
 		.otherwise({redirectTo: '/'});
 });
 
-//*** State Provider ***//
 app.config(function($stateProvider) {
 	$stateProvider
 		.state('blogList', {
@@ -57,8 +55,6 @@ app.config(function($stateProvider) {
 			controller: 'ListController'
 		});
 });
-
-//**** REST Web API functions ***
 
 function getBlogs($http) {
 	return $http.get('/api/blogs');
@@ -80,9 +76,6 @@ function deleteBlog($http, authentication, id) {
 	return $http.delete('/api/blogs/' + id, { headers : { Authorization: 'Bearer ' + authentication.getToken() }} );
 }
 
-//*** Controllers ***
-
-//home (index) page controller
 app.controller('HomeController', function HomeController() {
 	var vm = this;
 	vm.pageHeader = {
@@ -91,7 +84,6 @@ app.controller('HomeController', function HomeController() {
 	vm.message = "Welcome to my blog site!";
 });
 
-//blog add controller
 app.controller("AddController", [ '$http', '$routeParams', '$state', 'authentication', function AddController($http, $routeParams, $state, authentication) {
 	var vm = this;
 	vm.blog = {};
@@ -101,6 +93,10 @@ app.controller("AddController", [ '$http', '$routeParams', '$state', 'authentica
 		var data = vm.blog;
 		data.title = addForm.title.value;
 		data.text = addForm.text.value;
+
+		var currentUser = authentication.currentUser();
+		data.author = currentUser.name;
+		data.authorEmail = currentUser.email;
 
 		addBlog($http, authentication, data)
 			.success(function(data) {
@@ -113,20 +109,14 @@ app.controller("AddController", [ '$http', '$routeParams', '$state', 'authentica
 	}
 }]);
 
-//blog list controller
 app.controller('ListController', [ '$http', 'authentication', function ListController($http, authentication) {
 	var vm = this;
 	vm.pageHeader = {
 		title: 'Blog List'
 	};
 
-	vm.isLoggedIn = function() {
-		return authentication.isLoggedIn();
-	}
-	vm.logout = function() {
-		authentication.logout();
-		$location.path('/');
-	};
+	vm.isLoggedIn = authentication.isLoggedIn();
+	vm.currentUser = authentication.currentUser();
 
 	getBlogs($http).success(function(data) {
 		vm.blogs = data;
@@ -137,16 +127,14 @@ app.controller('ListController', [ '$http', 'authentication', function ListContr
 	});
 }]);
 
-//edit blog controller
 app.controller('EditController', [ '$http', '$routeParams', '$state', 'authentication', function EditController($http, $routeParams, $state, authentication) {
 	var vm = this;
-	vm.blog = {}; //start with empty blog
+	vm.blog = {}; 
 	vm.id = $routeParams.id; 
 	vm.pageHeader = {
 		title: 'Blog Edit'
 	};
 
-	//Get blog data to be displayed on edit page
 	getBlogById($http, vm.id).success(function(data) {
 		vm.blog = data;
 		vm.message = "Blog data found!";
@@ -155,7 +143,6 @@ app.controller('EditController', [ '$http', '$routeParams', '$state', 'authentic
 		vm.message = "Could not get blog with id " + vm.id;
 	});
 
-	//Submit function attached to ViewModel for use in form
 	vm.submit = function() {
 		var data = vm.blog;
 		data.title = userForm.title.value;
@@ -163,7 +150,7 @@ app.controller('EditController', [ '$http', '$routeParams', '$state', 'authentic
 
 		updateBlog($http, authentication, vm.id, data).success(function(data) {
 			vm.message = "Blog data updated!";
-			$state.go('blogList'); //refer to book for info on StateProvider
+			$state.go('blogList');
 		})
 		.error(function (e) {
 			vm.message = "Could not update blog with id " + vm.id;
@@ -171,7 +158,6 @@ app.controller('EditController', [ '$http', '$routeParams', '$state', 'authentic
 	}
 }]);
 
-//delete blog controller
 app.controller("DeleteController", [ '$http', '$routeParams', '$state', 'authentication', function DeleteController($http, $routeParams, $state, authentication) {
 	var vm = this;
 	vm.blog = {};
@@ -192,7 +178,6 @@ app.controller("DeleteController", [ '$http', '$routeParams', '$state', 'authent
 		deleteBlog($http, authentication, vm.id)
 			.success(function(data) {
 				vm.message = "Blog data deleted!";
-				//go back to blogList
 				$state.go('blogList');
 			})
 			.error(function (e) {

@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-//compiles model from 'Blog' schema defined in models/blogs.js
 var Blog = mongoose.model('Blog');
 
 var sendJSONResponse = function(res, status, content) {
@@ -7,7 +6,6 @@ var sendJSONResponse = function(res, status, content) {
 	res.json(content);
 };
 
-/* function for getting list of blogs */
 var buildBlogList = function(req, res, results){
 	var blogs = [];
 	results.forEach(function(obj){
@@ -15,20 +13,22 @@ var buildBlogList = function(req, res, results){
 			title: obj.title,
 			text: obj.text,
 			createdOn: obj.createdOn,
+			author: obj.author,
+			authorEmail: obj.authorEmail,
 			_id: obj._id
 		});
 	});
 	return blogs;
 };
 
-/* POST a new blog */
-/* /api/blogs */
 module.exports.blogCreate = function (req, res) {
 	console.log(req.body);
 	Blog.create({
 		title: req.body.title,
 		text: req.body.text,
-		createdOn: req.body.createdOn
+		createdOn: req.body.createdOn,
+		author: req.body.author,
+		authorEmail: req.body.authorEmail
 	}, function(err, blog) {
 		if(err) {
 			console.log(err);
@@ -41,7 +41,6 @@ module.exports.blogCreate = function (req, res) {
       );
 };
 
-/* GET a blog by its id */
 module.exports.blogReadOne = function (req, res) {
 	console.log('Finding blog id details', req.params);
 	if(req.params && req.params.blogid) {
@@ -65,7 +64,6 @@ module.exports.blogReadOne = function (req, res) {
 	}
 };
 
-/* GET a list of all blogs */
 module.exports.blogList = function (req, res) {
 	console.log('Getting list of blogs.');
 	Blog.find().exec(function(err, results) {
@@ -84,8 +82,6 @@ module.exports.blogList = function (req, res) {
 	});
 };
 
-/* update (PUT) one blog entry */
-/* /api/blogs/:blogid */
 module.exports.blogUpdateOne = function (req, res) {
 	console.log("Updating a blog entry with id of " + req.params.blogid);
 	console.log(req.body);
@@ -101,8 +97,6 @@ module.exports.blogUpdateOne = function (req, res) {
 	);
 };
 
-/* DELETE one blog */
-/* /api/blogs/:blogid */
 module.exports.blogDeleteOne = function (req, res) {
 	console.log("Deleting blog entry with id of " + req.params.blogid);
 	console.log(req.body);

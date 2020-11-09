@@ -14,6 +14,14 @@ var blogSchema = new mongoose.Schema({
 	createdOn: {
 		type: String,
 		"default": getNewDate().toLocaleString("en-US", {timeZone: "America/New_York"})
+	},
+	author: {
+		type: String,
+		required: true
+	},
+	authorEmail: {
+		type: String,
+		required: true
 	}
 });
 
