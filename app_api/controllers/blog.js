@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+//compiles model from 'Blog' schema defined in models/blogs.js
 var Blog = mongoose.model('Blog');
 
 var sendJSONResponse = function(res, status, content) {
@@ -15,6 +16,7 @@ var buildBlogList = function(req, res, results){
 			createdOn: obj.createdOn,
 			author: obj.author,
 			authorEmail: obj.authorEmail,
+			comments: obj.comments,
 			_id: obj._id
 		});
 	});
@@ -108,5 +110,20 @@ module.exports.blogDeleteOne = function (req, res) {
 			sendJSONResponse(res, 204, null);
 		}
 	}
+	);
+};
+
+module.exports.addComment = function (req, res) {
+	console.log("Commenting on blog with id " + req.params.blogid);
+	console.log(req.body);
+	Blog.findOneAndUpdate({ _id: req.params.blogid },
+		{ $set: { "comments" : req.body.comments }},
+		function(err, response) {
+			if (err) {
+				sendJSONResponse(res, 400, err);
+			} else {
+				sendJSONResponse(res, 201, response);
+			}
+		}
 	);
 };
